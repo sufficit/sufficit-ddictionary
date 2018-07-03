@@ -4,11 +4,14 @@ using System.Collections.Generic;
 
 public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 {
+    private readonly object _dictionaryLock = new object();
     private readonly IDictionary<TKey, TValue> dictionary;
     private readonly TValue defaultValue;
 
     public delegate void ChangeEvent(object sender, DDictionaryChangeEventArgs<TKey, TValue> data);
     public event ChangeEvent onChange;
+    
+    #region CONSTRUTORES
 
     public DDictionary() : this(new Dictionary<TKey, TValue>(), default(TValue))
     {
@@ -21,16 +24,12 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         this.defaultValue = defaultValue;
     }
 
-    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-    {
-        return dictionary.GetEnumerator();
-    }
-
+    #endregion
     #region MODIFICADORES
 
     public void Add(KeyValuePair<TKey, TValue> item)
     {
-        lock (dictionary) dictionary.Add(item);
+        lock (_dictionaryLock) dictionary.Add(item);
         DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
         {
             Key = item.Key,
@@ -43,7 +42,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public void Add(TKey key, TValue value)
     {
-        lock (dictionary) dictionary.Add(key, value);
+        lock (_dictionaryLock) dictionary.Add(key, value);
         DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
         {
             Key = key,
@@ -57,7 +56,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     public bool Remove(TKey key)
     {
         bool retorno = false;
-        lock (dictionary) retorno = dictionary.Remove(key);
+        lock (_dictionaryLock) retorno = dictionary.Remove(key);
         DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
         {
             Key = key,
@@ -71,7 +70,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     public bool Remove(KeyValuePair<TKey, TValue> item)
     {
         bool retorno = false;
-        lock (dictionary) retorno = dictionary.Remove(item);
+        lock (_dictionaryLock) retorno = dictionary.Remove(item);
         DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
         {
             Key = item.Key,
@@ -85,7 +84,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     public void Clear()
     {
-        lock (dictionary) dictionary.Clear();
+        lock (_dictionaryLock) dictionary.Clear();
         DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
         {
             Operation = DDictionaryOperation.CLEAR,
@@ -95,61 +94,96 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     }
 
     #endregion
+    #region IDICTIONARY ENUMERATORS
+
+    public int Count
+    {
+        get { lock (_dictionaryLock) return dictionary.Count; }
+    }
+
+    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+    {
+        lock (_dictionaryLock) return dictionary.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        lock (_dictionaryLock) return dictionary.GetEnumerator();
+    }
 
     public bool Contains(KeyValuePair<TKey, TValue> item)
     {
-        return dictionary.Contains(item);
+        lock (_dictionaryLock) return dictionary.Contains(item);
     }
 
     public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
     {
-        dictionary.CopyTo(array, arrayIndex);
+        lock (_dictionaryLock) dictionary.CopyTo(array, arrayIndex);
     }
 
-    public int Count
+    public bool ContainsKey(TKey key)
     {
-        get { return dictionary.Count; }
+        lock (_dictionaryLock) return dictionary.ContainsKey(key);
     }
 
+    public ICollection<TKey> Keys
+    {
+        get {
+            TKey[] resultado = null;
+            lock (_dictionaryLock)
+            {
+                resultado = new TKey[dictionary.Keys.Count];
+                dictionary.Keys.CopyTo(resultado, 0);
+            }
+            return resultado;
+        }
+    }
+
+    public ICollection<TValue> Values
+    {
+        get
+        {
+            lock (_dictionaryLock) return new List<TValue>(dictionary.Values) { defaultValue };
+        }
+    }
+
+    #endregion
+    
     public bool IsReadOnly
     {
         get { return dictionary.IsReadOnly; }
     }
 
-    public bool ContainsKey(TKey key)
-    {
-        return dictionary.ContainsKey(key);
-    }
-
     public bool TryGetValue(TKey key, out TValue value)
     {
-        if (!dictionary.TryGetValue(key, out value))
+        lock (_dictionaryLock)
         {
-            value = defaultValue;
+            if (!dictionary.TryGetValue(key, out value))
+            {
+                value = defaultValue;
+                return false;
+            }
         }
-
         return true;
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return dictionary.GetEnumerator();
-    }
+    }    
 
     public TValue this[TKey key]
     {
         get
         {
-            if (dictionary.ContainsKey(key))
-                return dictionary[key];
-            else
-                return defaultValue;
+            lock (_dictionaryLock)
+            {
+                if (dictionary.ContainsKey(key))
+                    return dictionary[key];
+                else
+                    return defaultValue;
+            }
         }
 
         set
         {
             bool change = false;
-            lock (dictionary)
+            lock (_dictionaryLock)
             {
                 if (dictionary.ContainsKey(key))
                 {
@@ -179,17 +213,4 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         }
     }
 
-    public ICollection<TKey> Keys
-    {
-        get { return dictionary.Keys; }
-    }
-
-    public ICollection<TValue> Values
-    {
-        get
-        {
-            var values = new List<TValue>(dictionary.Values) { defaultValue };
-            return values;
-        }
-    }
 }
