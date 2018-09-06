@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
 {
     private readonly object _dictionaryLock = new object();
     private readonly IDictionary<TKey, TValue> dictionary;
@@ -154,19 +154,6 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         get { return dictionary.IsReadOnly; }
     }
 
-    public bool TryGetValue(TKey key, out TValue value)
-    {
-        lock (_dictionaryLock)
-        {
-            if (!dictionary.TryGetValue(key, out value))
-            {
-                value = defaultValue;
-                return false;
-            }
-        }
-        return true;
-    }    
-
     public TValue this[TKey key]
     {
         get
@@ -213,4 +200,54 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         }
     }
 
+    public bool TryGetValue(TKey key, out TValue value)
+    {
+        lock (_dictionaryLock)
+        {
+            if (!dictionary.TryGetValue(key, out value))
+            {
+                value = defaultValue;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    #region IMPLEMENTACAO GENERIC IDICTIONARY
+    
+    int ICollection.Count => this.Count;    
+
+    bool ICollection.IsSynchronized { get { return System.Threading.Monitor.TryEnter(_dictionaryLock); } }
+
+    object IDictionary.this[object key] { get { return this[(TKey)key]; } set { this[(TKey)key] = (TValue)value; } }
+    
+    bool IDictionary.Contains(object key) { return this.ContainsKey((TKey)key); }
+
+    void IDictionary.Add(object key, object value) { this.Add((TKey)key, (TValue)value); }
+
+    void IDictionary.Clear() { this.Clear(); }
+
+    void IDictionary.Remove(object key) { this.Remove((TKey)key); }
+
+    IDictionaryEnumerator IDictionary.GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }    
+
+    void ICollection.CopyTo(Array array, int index)
+    {
+        throw new NotImplementedException();
+    }
+
+    ICollection IDictionary.Keys => throw new NotImplementedException();
+
+    ICollection IDictionary.Values => throw new NotImplementedException();
+
+    bool IDictionary.IsReadOnly => throw new NotImplementedException();
+
+    bool IDictionary.IsFixedSize => throw new NotImplementedException();
+
+    object ICollection.SyncRoot => throw new NotImplementedException();
+
+    #endregion
 }
