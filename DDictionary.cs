@@ -101,6 +101,56 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
         get { lock (_dictionaryLock) return dictionary.Count; }
     }
 
+    #region IDictionaryEnumerator
+
+    IDictionaryEnumerator IDictionary.GetEnumerator()
+    {
+        lock (_dictionaryLock)
+            return new DDictionaryEnumerator(dictionary.GetEnumerator());
+    }
+
+    public class DDictionaryEnumerator : IDictionaryEnumerator
+    {
+        public DDictionaryEnumerator(IEnumerator<KeyValuePair<TKey, TValue>> enumerator)
+        {
+            Enumerator = enumerator;
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> Enumerator;
+
+        public DictionaryEntry Entry
+        {
+            get { return new DictionaryEntry(Enumerator.Current.Key, Enumerator.Current.Value); }
+        }
+
+        public object Key
+        {
+            get { return Enumerator.Current.Key; }
+        }
+
+        public object Value
+        {
+            get { return Enumerator.Current.Value; }
+        }
+
+        public object Current
+        {
+            get { return Entry; }
+        }
+
+        public bool MoveNext()
+        {
+            return Enumerator.MoveNext();
+        }
+
+        public void Reset()
+        {
+            Enumerator.Reset();
+        }
+    }
+
+    #endregion
+
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
         lock (_dictionaryLock) return dictionary.GetEnumerator();
@@ -228,12 +278,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     void IDictionary.Clear() { this.Clear(); }
 
     void IDictionary.Remove(object key) { this.Remove((TKey)key); }
-
-    IDictionaryEnumerator IDictionary.GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }    
-
+    
     void ICollection.CopyTo(Array array, int index)
     {
         throw new NotImplementedException();
@@ -250,4 +295,8 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     object ICollection.SyncRoot => throw new NotImplementedException();
 
     #endregion
+
+    
 }
+
+
