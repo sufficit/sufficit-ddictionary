@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
 {
-    private readonly object _dictionaryLock = new object();
+    private readonly object _dictionaryLock;
     private readonly IDictionary<TKey, TValue> dictionary;
     private readonly TValue defaultValue;
 
@@ -18,9 +18,10 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
 
     }
 
-    public DDictionary(IDictionary<TKey, TValue> dictionary, TValue defaultValue)
+    public DDictionary(IDictionary<TKey, TValue> dictionary, TValue defaultValue = default)
     {
-        this.dictionary = dictionary;
+        this._dictionaryLock = new object();
+        this.dictionary = dictionary ?? new Dictionary<TKey, TValue>();
         this.defaultValue = defaultValue;
     }
 
@@ -193,7 +194,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     {
         get
         {
-            lock (_dictionaryLock) return new List<TValue>(dictionary.Values) { defaultValue };
+            lock (_dictionaryLock) return new List<TValue>(dictionary.Values);
         }
     }
 
@@ -219,7 +220,9 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
 
         set
         {
-            bool change = false;
+            bool success = false;
+            DDictionaryOperation op = DDictionaryOperation.SET;
+
             lock (_dictionaryLock)
             {
                 if (dictionary.ContainsKey(key))
@@ -227,26 +230,25 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
                     if (!Object.Equals(dictionary[key], value))
                     {
                         dictionary[key] = value;
-                        change = true;
+                        success = true;
                     }
                 }
                 else if (!Object.Equals(defaultValue, value))
-                {
+                {                    
                     dictionary[key] = value;
-                    change = true;
+                    success = true;
+                    op = DDictionaryOperation.ADD;
                 }
             }
-            if (change)
+
+            DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
             {
-                DDictionaryChangeEventArgs<TKey, TValue> parametros = new DDictionaryChangeEventArgs<TKey, TValue>
-                {
-                    Key = key,
-                    Value = value,
-                    Operation = DDictionaryOperation.SET,
-                    Success = true
-                };
-                onChange?.Invoke(this, parametros);
-            }
+                Key = key,
+                Value = value,
+                Operation = op,
+                Success = success
+            };
+            onChange?.Invoke(this, parametros);         
         }
     }
 
@@ -284,7 +286,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
         throw new NotImplementedException();
     }
 
-    ICollection IDictionary.Keys => throw new NotImplementedException();
+    ICollection IDictionary.Keys => new List<TKey>(dictionary.Keys);
 
     ICollection IDictionary.Values => throw new NotImplementedException();
 
@@ -295,8 +297,6 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     object ICollection.SyncRoot => throw new NotImplementedException();
 
     #endregion
-
-    
 }
 
 
