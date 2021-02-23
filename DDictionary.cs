@@ -151,6 +151,23 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     }
 
     #endregion
+    #region METODOS INTERNOS
+    
+    private void CopyTo(Array array, int arrayIndex)
+    {
+        lock (_dictionaryLock)
+        {
+            using (IEnumerator<KeyValuePair<TKey, TValue>> empEnumerator = dictionary.GetEnumerator())
+            {
+                for (int x = arrayIndex; empEnumerator.MoveNext(); x++)
+                {
+                    array.SetValue(empEnumerator.Current, x);
+                }
+            }
+        }
+    }
+
+    #endregion
 
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
@@ -167,10 +184,8 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
         lock (_dictionaryLock) return dictionary.Contains(item);
     }
 
-    public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-    {
-        lock (_dictionaryLock) dictionary.CopyTo(array, arrayIndex);
-    }
+    void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+     => CopyTo(array, arrayIndex);
 
     public bool ContainsKey(TKey key)
     {
@@ -281,10 +296,7 @@ public class DDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
 
     void IDictionary.Remove(object key) { this.Remove((TKey)key); }
     
-    void ICollection.CopyTo(Array array, int index)
-    {
-        throw new NotImplementedException();
-    }
+    void ICollection.CopyTo(Array array, int index) => CopyTo(array, index);
 
     ICollection IDictionary.Keys => new List<TKey>(dictionary.Keys);
 
