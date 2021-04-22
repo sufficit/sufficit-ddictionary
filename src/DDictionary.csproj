@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Information">
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>license</PackageLicenseFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/sufficit/sufficit-ddictionary/master/icon.ico</PackageIconUrl>
+    <Icon>icon.png</Icon>
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
     <Authors>Sufficit</Authors>
     <PackageId>Sufficit.DDictionary</PackageId>
@@ -28,7 +28,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="General">
-    <ApplicationIcon>../icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 
@@ -53,11 +52,11 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="../LICENSE">
+    <None Include="../license">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="../README.md">
+    <None Include="../readme.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
