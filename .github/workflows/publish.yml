@@ -34,7 +34,7 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
     - name: Updating Key
-      run: nuget setapikey ${{secrets.NUGET_API_KEY}}
+      run: nuget setApiKey ${{secrets.NUGET_API_KEY}}
       
     - name: Publish to Nuget.Org
       run: dotnet nuget push ./src/nupkgs/*.nupkg
