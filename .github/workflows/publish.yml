@@ -17,7 +17,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore src/DDictionary.csproj
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore src/DDictionary.csproj
     - name: Publish Sufficit.DDictionary
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
