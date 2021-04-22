@@ -3,6 +3,7 @@ name: Publish Packages
 on:
   push:
     branches: [ master ]
+    paths: 'src/*'
 
 jobs:
   publish:
@@ -19,7 +20,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore src/DDictionary.csproj
     - name: Deploy Package and Publish to Nuget.Org 
-      uses: rohith/publish-nuget@v2
+      uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: src/DDictionary.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
