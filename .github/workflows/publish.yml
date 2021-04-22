@@ -2,8 +2,7 @@ name: Publish Packages
 
 on:
   push:
-    branches: [ master ]
-    working-directory: src
+    branches: [ master ]    
 
 jobs:
   publish:
@@ -14,12 +13,15 @@ jobs:
     - name: Setup .NET Environment
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.2.402
+        dotnet-version: 2.x
     - name: Install dependencies
+      working-directory: ./src
       run: dotnet restore
     - name: Build
+      working-directory: ./src
       run: dotnet build --configuration Release --no-restore
     - name: Deploy Package and Publish to Nuget.Org 
+      working-directory: ./src
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
