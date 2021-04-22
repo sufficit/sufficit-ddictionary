@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Versioning">
-    <VersionSuffix>$([System.DateTime]::UtcNow.ToString(yy)).$([System.DateTime]::UtcNow.ToString(MMdd)).$([System.DateTime]::UtcNow.ToString(mmff))</VersionSuffix>
+    <VersionSuffix>$([System.DateTime]::UtcNow.ToString(yyyy)).$([System.DateTime]::UtcNow.ToString(1MMdd)).$([System.DateTime]::UtcNow.ToString(1HHmmff))</VersionSuffix>
     <AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">1.0.0.0</AssemblyVersion>
     <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">1.$(VersionSuffix)</AssemblyVersion>
     <Version>1.0.0.0</Version>
@@ -14,10 +14,11 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Information">
+    <PackageLicenseExpression>https://github.com/sufficit/sufficit-ddictionary/LICENSE</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
-    <PackageIcon>../sufficit-icon.png</PackageIcon>
+    <PackageIcon>assets/icons/sufficit-icon.png</PackageIcon>
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
     <Authors>Hugo Castro de Deco</Authors>
     <PackageId>Sufficit.DDictionary</PackageId>
@@ -25,7 +26,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="General">
-    <ApplicationIcon>../sufficit-icon.ico</ApplicationIcon>
+    <ApplicationIcon>assets/icons/sufficit-icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 
