@@ -20,8 +20,7 @@ jobs:
     - name: Build
       working-directory: ./src
       run: dotnet build --configuration Release --no-restore
-    - name: Deploy Package and Publish to Nuget.Org 
-      working-directory: ./src
+    - name: Deploy Package and Publish to Nuget.Org       
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
