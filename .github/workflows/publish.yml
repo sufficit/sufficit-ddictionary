@@ -3,7 +3,7 @@ name: Publish Packages
 on:
   push:
     branches: [ master ]
-    paths: 'src/*'
+    working-directory: src
 
 jobs:
   publish:
@@ -16,12 +16,11 @@ jobs:
       with:
         dotnet-version: 2.2.402
     - name: Install dependencies
-      run: dotnet restore src/DDictionary.csproj
+      run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore src/DDictionary.csproj
+      run: dotnet build --configuration Release --no-restore
     - name: Deploy Package and Publish to Nuget.Org 
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-          PROJECT_FILE_PATH: src/DDictionary.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
           
