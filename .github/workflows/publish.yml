@@ -18,8 +18,9 @@ jobs:
       run: dotnet restore src/DDictionary.csproj
     - name: Build
       run: dotnet build --configuration Release --no-restore src/DDictionary.csproj
-    - name: Publish Sufficit.DDictionary
+    - name: Deploy Package and Publish to Nuget.Org 
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: src/DDictionary.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+          package: src/
