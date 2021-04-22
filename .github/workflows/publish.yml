@@ -14,14 +14,24 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '2.2.x'
+        
     - name: Install dependencies
       working-directory: ./src
       run: dotnet restore
+      
     - name: Build
       working-directory: ./src
       run: dotnet build --configuration Release --no-restore
-    - name: Deploy Package and Publish to Nuget.Org       
-      uses: brandedoutcast/publish-nuget@v2.5.2
+      
+    - name: Deploy Package 
+      working-directory: ./src
+      run: dotnet pack --configuration Release
+    
+    - name: Publish to Nuget.Org 
+      uses: actions/setup-dotnet@v1
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
       with:
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        source-url: https://api.nuget.org	
+      run: dotnet nuget push ./src/*.nupkg
           
