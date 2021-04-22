@@ -17,14 +17,15 @@
     <PackageProjectUrl>https://www.sufficit.com.br</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
-    <ApplicationIcon>sufficit-icon.ico</ApplicationIcon>
+    <PackageIcon>sufficit-icon.ico</PackageIcon>
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
     <Authors>Hugo Castro de Deco</Authors>
     <PackageId>Sufficit.DDictionary</PackageId>
     <Product>DDictionary</Product>
   </PropertyGroup>
-  
+
   <PropertyGroup Label="General">
+    <ApplicationIcon>sufficit-icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 
@@ -48,7 +49,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\sufficit-icon.png">
+    <None Include="sufficit-icon.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
