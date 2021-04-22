@@ -29,8 +29,8 @@ jobs:
     
     - name: Publish to Nuget.Org
       working-directory: ./src
-      run: dotnet nuget push ./nupkgs/*.nupkg --source nuget --api-key ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push ./nupkgs/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}}
       
     - name: Publish to GitHub
       working-directory: ./src
-      run: dotnet nuget push ./nupkgs/*.nupkg --source github
+      run: dotnet nuget push ./nupkgs/*.nupkg --source https://nuget.pkg.github.com/sufficit/index.json
