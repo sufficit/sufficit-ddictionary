@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Information">
-    <PackageLicense>https://github.com/sufficit/sufficit-ddictionary/LICENSE</PackageLicense>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
@@ -57,6 +57,10 @@
       <PackagePath></PackagePath>
     </None>
     <None Include="../LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
