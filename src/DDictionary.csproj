@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Information">
-    <PackageProjectUrl>https://www.sufficit.com.br</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
-    <PackageIcon>sufficit-icon.ico</PackageIcon>
+    <PackageIcon>sufficit-icon.png</PackageIcon>
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
     <Authors>Hugo Castro de Deco</Authors>
     <PackageId>Sufficit.DDictionary</PackageId>
@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="General">
-    <ApplicationIcon>sufficit-icon.ico</ApplicationIcon>
+    <ApplicationIcon>sufficit-icon.png</ApplicationIcon>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 
@@ -47,12 +47,5 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>true</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="sufficit-icon.ico">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
     
 </Project>
