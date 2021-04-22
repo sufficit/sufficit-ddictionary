@@ -33,4 +33,4 @@ jobs:
       
     - name: Publish to GitHub
       working-directory: ./src
-      run: dotnet nuget push ./nupkgs/*.nupkg --source https://nuget.pkg.github.com/sufficit/index.json
+      run: dotnet nuget push ./nupkgs/*.nupkg --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json --api-key ${{github.token}}
