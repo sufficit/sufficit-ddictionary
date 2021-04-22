@@ -28,4 +28,4 @@ jobs:
       run: dotnet pack --configuration Release --output ./nupkgs
     
     - name: Publish to Nuget.Org
-      run: dotnet nuget push ./src/nupkgs/*.nupkg --source https://api.nuget.org --api-key ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push ./src/nupkgs/*.nupkg --source https://www.nuget.org --api-key ${{secrets.NUGET_API_KEY}}
