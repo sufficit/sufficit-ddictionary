@@ -50,9 +50,13 @@
   <ItemGroup>
     <None Include="../sufficit-icon.png">
       <Pack>True</Pack>
-      <PackagePath>/</PackagePath>
+      <PackagePath></PackagePath>
     </None>
     <None Include="../sufficit-icon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="../LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
