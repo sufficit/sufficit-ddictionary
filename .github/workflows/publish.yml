@@ -34,3 +34,9 @@ jobs:
     - name: Publish to GitHub
       working-directory: ./src
       run: dotnet nuget push ./nupkgs/*.nupkg --source https://nuget.pkg.github.com/${{github.repository_owner}}/index.json --api-key ${{github.token}}
+      
+    - name: Delete Old Packages from GitHub
+    - uses: actions/delete-package-versions@v1
+      with:
+        package-name: 'Sufficit.DDictionary'
+        num-old-versions-to-delete: 3
