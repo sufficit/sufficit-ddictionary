@@ -19,8 +19,9 @@
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
     <PackageIcon>sufficit-icon.png</PackageIcon>
+    <Icon>sufficit-icon.png</Icon>
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
-    <Authors>Hugo Castro de Deco</Authors>
+    <Authors>Sufficit</Authors>
     <PackageId>Sufficit.DDictionary</PackageId>
     <Product>DDictionary</Product>
   </PropertyGroup>
