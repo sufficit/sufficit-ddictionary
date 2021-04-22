@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Information">
-    <PackageLicenseExpression>https://github.com/sufficit/sufficit-ddictionary/LICENSE</PackageLicenseExpression>
+    <PackageLicense>https://github.com/sufficit/sufficit-ddictionary/LICENSE</PackageLicense>
     <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
     <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
