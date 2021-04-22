@@ -27,11 +27,13 @@ jobs:
       working-directory: ./src
       run: dotnet pack --configuration Release
     
-    - name: Publish to Nuget.Org 
+    - name: Prepare Publish Environment 
       uses: actions/setup-dotnet@v1
       env:
         NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}
       with:
-        source-url: https://api.nuget.org	
+        source-url: https://api.nuget.org
+
+    - name: Publish to Nuget.Org
       run: dotnet nuget push ./src/*.nupkg
           
