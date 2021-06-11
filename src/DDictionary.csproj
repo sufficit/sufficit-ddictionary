@@ -1,50 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup Label="Targeting">
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Label="Versioning">
-    <VersionSuffix>$([System.DateTime]::UtcNow.ToString(yyyy)).$([System.DateTime]::UtcNow.ToString(1MMdd)).$([System.DateTime]::UtcNow.ToString(1HHmm))</VersionSuffix>
+  <PropertyGroup Label="Sufficit Versioning">
+    <VersionSuffix>1.$([System.DateTime]::UtcNow.ToString(yy)).$([System.DateTime]::UtcNow.ToString(MMdd)).$([System.DateTime]::UtcNow.ToString(mmff))</VersionSuffix>
     <AssemblyVersion Condition=" '$(VersionSuffix)' == '' ">1.0.0.0</AssemblyVersion>
-    <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">1.$(VersionSuffix)</AssemblyVersion>
-    <Version>1.0.0.0</Version>
-    <Version Condition=" '$(VersionSuffix)' == '' ">1.0.0.0</Version>
-    <Version Condition=" '$(VersionSuffix)' != '' ">1.$(VersionSuffix)</Version>
+    <AssemblyVersion Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+    <Version Condition=" '$(VersionSuffix)' == '' ">0.0.1.0</Version>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionSuffix)</Version>
   </PropertyGroup>
-
-  <PropertyGroup Label="Package Information">
-    <PackageLicenseFile>license</PackageLicenseFile>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
-    <Description>Non null Dictionary. Using default types of generic objects. Thread safe !.</Description>
-    <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/sufficit/sufficit-ddictionary/master/icon.ico</PackageIconUrl>
+  
+  <PropertyGroup Label="Sufficit Product General">
     <Company>SUFFICIT SOLUÇÕES EM TECNOLOGIA DA INFORMAÇÃO</Company>
     <Authors>Sufficit</Authors>
-    <PackageId>Sufficit.DDictionary</PackageId>
-    <Product>DDictionary</Product>
-  </PropertyGroup>
-
-  <PropertyGroup Label="General">
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <ProductName>Sufficit Default Dictionary</ProductName>
+    <AssemblyName>DDictionary</AssemblyName>
 
     <!-- Copia todas as dlls de dependencias para o diretório de publicação dos projetos que o utilizam -->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PreserveCompilationReferences>false</PreserveCompilationReferences>
 
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
+  <PropertyGroup Label="Sufficit Pacote NUGET">
+    <Name>Sufficit.DDictionary</Name>
+    <PackageId>Sufficit.DDictionary</PackageId>
+    <PackageDescription>Non null Dictionary. Using default types of generic objects. Thread safe !.</PackageDescription>
+    <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sufficit/sufficit-ddictionary/master/icon.ico</PackageIconUrl>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+    <PackageLicenseFile>license</PackageLicenseFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
