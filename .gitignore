@@ -2,3 +2,4 @@ bin/
 obj/
 PublishOutput/
 nuget.config
+src/.vs/
