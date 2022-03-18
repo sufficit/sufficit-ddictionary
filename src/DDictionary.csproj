@@ -18,7 +18,7 @@
     <Authors>Sufficit</Authors>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <ProductName>Sufficit Default Dictionary</ProductName>
-    <AssemblyName>DDictionary</AssemblyName>
+    <AssemblyName>Sufficit.DDictionary</AssemblyName>
 
     <!-- Copia todas as dlls de dependencias para o diretório de publicação dos projetos que o utilizam -->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -33,7 +33,7 @@
     <PackageDescription>Non null Dictionary. Using default types of generic objects. Thread safe !.</PackageDescription>
     <RepositoryUrl>https://github.com/sufficit/sufficit-ddictionary</RepositoryUrl>
     <PackageProjectUrl>https://github.com/sufficit/sufficit-ddictionary</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/sufficit/sufficit-ddictionary/master/icon.ico</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sufficit/sufficit-ddictionary/main/icon.ico</PackageIconUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 
     <PackageLicenseFile>license</PackageLicenseFile>
